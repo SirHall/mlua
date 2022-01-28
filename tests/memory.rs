@@ -2,10 +2,20 @@ use std::sync::Arc;
 
 use mlua::{Lua, Result, UserData};
 
-#[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+#[cfg(any(
+    feature = "lua54",
+    feature = "lua53",
+    feature = "luaeris53",
+    feature = "lua52"
+))]
 use mlua::Error;
 
-#[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+#[cfg(any(
+    feature = "lua54",
+    feature = "lua53",
+    feature = "luaeris53",
+    feature = "lua52"
+))]
 #[test]
 fn test_memory_limit() -> Result<()> {
     let lua = Lua::new();
@@ -41,7 +51,12 @@ fn test_gc_control() -> Result<()> {
     #[cfg(feature = "lua54")]
     assert_eq!(lua.gc_gen(0, 0), mlua::GCMode::Incremental);
 
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     {
         assert!(lua.gc_is_running());
         lua.gc_stop();
@@ -68,7 +83,7 @@ fn test_gc_control() -> Result<()> {
     Ok(())
 }
 
-#[cfg(any(feature = "lua53", feature = "lua52"))]
+#[cfg(any(feature = "lua53", feature = "luaeris53", feature = "lua52"))]
 #[test]
 fn test_gc_error() {
     use mlua::Error;

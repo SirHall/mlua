@@ -117,9 +117,19 @@ impl<'lua> Debug<'lua> {
             );
             DebugStack {
                 num_ups: (*self.ar.get()).nups as i32,
-                #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+                #[cfg(any(
+                    feature = "lua54",
+                    feature = "lua53",
+                    feature = "luaeris53",
+                    feature = "lua52"
+                ))]
                 num_params: (*self.ar.get()).nparams as i32,
-                #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+                #[cfg(any(
+                    feature = "lua54",
+                    feature = "lua53",
+                    feature = "luaeris53",
+                    feature = "lua52"
+                ))]
                 is_vararg: (*self.ar.get()).isvararg != 0,
             }
         }
@@ -170,11 +180,21 @@ pub struct DebugSource<'a> {
 #[derive(Copy, Clone, Debug)]
 pub struct DebugStack {
     pub num_ups: i32,
-    /// Requires `feature = "lua54/lua53/lua52"`
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    /// Requires `feature = "lua54/luaeris53/lua53/lua52"`
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     pub num_params: i32,
-    /// Requires `feature = "lua54/lua53/lua52"`
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    /// Requires `feature = "lua54/luaeris53/lua53/lua52"`
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     pub is_vararg: bool,
 }
 

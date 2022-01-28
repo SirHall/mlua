@@ -146,6 +146,7 @@ fn test_coroutine_from_closure() -> Result<()> {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "luaeris53",
         feature = "lua52",
         feature = "luajit"
     ))]

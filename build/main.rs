@@ -11,6 +11,7 @@ use std::process::Command;
         feature = "vendored",
         any(
             feature = "lua54",
+            feature = "luaeris53",
             feature = "lua53",
             feature = "lua52",
             feature = "lua51",
@@ -24,6 +25,7 @@ use std::process::Command;
         not(feature = "vendored"),
         any(
             feature = "lua54",
+            feature = "luaeris53",
             feature = "lua53",
             feature = "lua52",
             feature = "lua51",
@@ -35,6 +37,7 @@ use std::process::Command;
 #[cfg_attr(
     not(any(
         feature = "lua54",
+        feature = "luaeris53",
         feature = "lua53",
         feature = "lua52",
         feature = "lua51",
@@ -135,6 +138,8 @@ fn generate_glue() -> Result<()> {
         (5, 2, 0)
     } else if cfg!(feature = "lua53") {
         (5, 3, 0)
+    } else if cfg!(feature = "luaeris53") {
+        (5, 3, 0)
     } else if cfg!(feature = "lua54") {
         (5, 4, 0)
     } else {
@@ -146,7 +151,12 @@ fn generate_glue() -> Result<()> {
         (version.0 * 100) + version.1
     )?;
 
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     writeln!(
         glue,
         "pub const LUA_REGISTRYINDEX: c_int = -{} - 1000;",
@@ -199,18 +209,20 @@ pub const LUA_FFILIBNAME: &str = "ffi";
 fn main() {
     #[cfg(not(any(
         feature = "lua54",
+        feature = "luaeris53",
         feature = "lua53",
         feature = "lua52",
         feature = "lua51",
         feature = "luajit"
     )))]
     compile_error!(
-        "You must enable one of the features: lua54, lua53, lua52, lua51, luajit, luajit52"
+        "You must enable one of the features: lua54, luaeris53, lua53, lua52, lua51, luajit, luajit52"
     );
 
     #[cfg(all(
         feature = "lua54",
         any(
+            feature = "luaeris53",
             feature = "lua53",
             feature = "lua52",
             feature = "lua51",
@@ -218,7 +230,7 @@ fn main() {
         )
     ))]
     compile_error!(
-        "You can enable only one of the features: lua54, lua53, lua52, lua51, luajit, luajit52"
+        "You can enable only one of the features: lua54, luaeris53, lua53, lua52, lua51, luajit, luajit52"
     );
 
     #[cfg(all(

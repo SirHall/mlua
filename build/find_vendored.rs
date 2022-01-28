@@ -5,6 +5,8 @@ pub fn probe_lua() -> Option<PathBuf> {
     let artifacts = lua_src::Build::new().build(lua_src::Lua54);
     #[cfg(feature = "lua53")]
     let artifacts = lua_src::Build::new().build(lua_src::Lua53);
+    #[cfg(feature = "luaeris53")]
+    let artifacts = lua_src::Build::new().build(lua_src::LuaEris53);
     #[cfg(feature = "lua52")]
     let artifacts = lua_src::Build::new().build(lua_src::Lua52);
     #[cfg(feature = "lua51")]

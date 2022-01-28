@@ -1,4 +1,4 @@
-use mlua::{Error, Lua, LuaSerdeExt, Result, UserData, Value};
+use mlua::{Error, Lua, LuaOptions, LuaSerdeExt, Result, UserData, Value};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -32,6 +32,9 @@ fn main() -> Result<()> {
         {active = true, model = "Volkswagen Golf", transmission = "Automatic", engine = {v = 1499, kw = 90}}
     "#).eval()?)?;
 
+    // let greet_fn = lua.create_function(|_, (name,): (String,)| Ok(format!("Hello, {}", name)))?;
+    // globals.set("greet", greet_fn)?;
+
     // Set it as (serializable) userdata
     globals.set("null", lua.null())?;
     globals.set("array_mt", lua.array_metatable())?;
@@ -43,24 +46,24 @@ fn main() -> Result<()> {
         .eval()?;
 
     // Serialize the table above to JSON
-    let json_str = serde_json::to_string(&val).map_err(Error::external)?;
+    let json_str = serde_json::to_string(&lua.globals()).map_err(Error::external)?;
     println!("{}", json_str);
 
     // Create Lua Value from JSON (or any serializable type)
-    let json = serde_json::json!({
-        "key": "value",
-        "null": null,
-        "array": [],
-    });
-    globals.set("json_value", lua.to_value(&json)?)?;
-    lua.load(
-        r#"
-        assert(json_value["key"] == "value")
-        assert(json_value["null"] == null)
-        assert(#(json_value["array"]) == 0)
-    "#,
-    )
-    .exec()?;
+    // let json = serde_json::json!({
+    //     "key": "value",
+    //     "null": null,
+    //     "array": [],
+    // });
+    // globals.set("json_value", lua.to_value(&json)?)?;
+    // lua.load(
+    //     r#"
+    //     assert(json_value["key"] == "value")
+    //     assert(json_value["null"] == null)
+    //     assert(#(json_value["array"]) == 0)
+    // "#,
+    // )
+    // .exec()?;
 
     Ok(())
 }

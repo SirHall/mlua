@@ -237,7 +237,7 @@ pub unsafe fn pop_error(state: *mut ffi::lua_State, err_code: c_int) -> Error {
                     Error::RuntimeError(err_string)
                 }
                 ffi::LUA_ERRMEM => Error::MemoryError(err_string),
-                #[cfg(any(feature = "lua53", feature = "lua52"))]
+                #[cfg(any(feature = "lua53", feature = "luaeris53", feature = "lua52"))]
                 ffi::LUA_ERRGCMM => Error::GarbageCollectorError(err_string),
                 _ => mlua_panic!("unrecognized lua error code"),
             }
@@ -668,7 +668,12 @@ pub unsafe extern "C" fn safe_xpcall(state: *mut ffi::lua_State) -> c_int {
 // Returns Lua main thread for Lua >= 5.2 or checks that the passed thread is main for Lua 5.1.
 // Does not call lua_checkstack, uses 1 stack space.
 pub unsafe fn get_main_state(state: *mut ffi::lua_State) -> Option<*mut ffi::lua_State> {
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     {
         ffi::lua_rawgeti(state, ffi::LUA_REGISTRYINDEX, ffi::LUA_RIDX_MAINTHREAD);
         let main_state = ffi::lua_tothread(state, -1);
@@ -802,19 +807,19 @@ pub unsafe fn init_error_registry(state: *mut ffi::lua_State) -> Result<()> {
         "__mod",
         "__pow",
         "__unm",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__idiv",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__band",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__bor",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__bxor",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__bnot",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__shl",
-        #[cfg(any(feature = "lua54", feature = "lua53"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53"))]
         "__shr",
         "__concat",
         "__len",
@@ -828,6 +833,7 @@ pub unsafe fn init_error_registry(state: *mut ffi::lua_State) -> Result<()> {
         #[cfg(any(
             feature = "lua54",
             feature = "lua53",
+            feature = "luaeris53",
             feature = "lua52",
             feature = "luajit52"
         ))]

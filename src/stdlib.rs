@@ -8,8 +8,13 @@ pub struct StdLib(u32);
 impl StdLib {
     /// [`coroutine`](https://www.lua.org/manual/5.4/manual.html#6.2) library
     ///
-    /// Requires `feature = "lua54/lua53/lua52"`
-    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+    /// Requires `feature = "lua54/lua53/luaeris53/lua52"`
+    #[cfg(any(
+        feature = "lua54",
+        feature = "lua53",
+        feature = "luaeris53",
+        feature = "lua52"
+    ))]
     pub const COROUTINE: StdLib = StdLib(1);
     /// [`table`](https://www.lua.org/manual/5.4/manual.html#6.6) library
     pub const TABLE: StdLib = StdLib(1 << 1);
@@ -21,8 +26,8 @@ impl StdLib {
     pub const STRING: StdLib = StdLib(1 << 4);
     /// [`utf8`](https://www.lua.org/manual/5.4/manual.html#6.5) library
     ///
-    /// Requires `feature = "lua54/lua53"`
-    #[cfg(any(feature = "lua54", feature = "lua53"))]
+    /// Requires `feature = "lua54/lua53/luaeris53"`
+    #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53",))]
     pub const UTF8: StdLib = StdLib(1 << 5);
     /// [`bit`](https://www.lua.org/manual/5.2/manual.html#6.7) library
     ///

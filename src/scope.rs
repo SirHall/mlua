@@ -206,7 +206,7 @@ impl<'lua, 'scope> Scope<'lua, 'scope> {
                     ffi::lua_pushnil(state);
                     ffi::lua_setiuservalue(state, -2, i as c_int);
                 }
-                #[cfg(any(feature = "lua53", feature = "lua52"))]
+                #[cfg(any(feature = "lua53", feature = "luaeris53", feature = "lua52"))]
                 {
                     ffi::lua_pushnil(state);
                     ffi::lua_setuservalue(state, -2);
@@ -446,7 +446,7 @@ impl<'lua, 'scope> Scope<'lua, 'scope> {
                     ffi::lua_pushnil(state);
                     ffi::lua_setiuservalue(state, -2, i as c_int);
                 }
-                #[cfg(any(feature = "lua53", feature = "lua52"))]
+                #[cfg(any(feature = "lua53", feature = "luaeris53", feature = "lua52"))]
                 {
                     ffi::lua_pushnil(state);
                     ffi::lua_setuservalue(state, -2);
@@ -530,7 +530,12 @@ impl<'lua, 'scope> Scope<'lua, 'scope> {
             // We know the destructor has not run yet because we hold a reference to the callback.
 
             // First, get the environment table
-            #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+            #[cfg(any(
+                feature = "lua54",
+                feature = "lua53",
+                feature = "luaeris53",
+                feature = "lua52"
+            ))]
             ffi::lua_getupvalue(state, -1, 1);
             #[cfg(any(feature = "lua51", feature = "luajit"))]
             ffi::lua_getfenv(state, -1);

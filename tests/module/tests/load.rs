@@ -44,6 +44,7 @@ fn test_module_error() -> Result<()> {
 #[cfg(any(
     feature = "lua54",
     feature = "lua53",
+    feature = "luaeris53",
     feature = "lua52",
     feature = "lua51"
 ))]

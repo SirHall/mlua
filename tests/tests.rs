@@ -578,7 +578,7 @@ fn test_num_conversion() -> Result<()> {
 
     assert_eq!(lua.load("1.0").eval::<i64>()?, 1);
     assert_eq!(lua.load("1.0").eval::<f64>()?, 1.0);
-    #[cfg(any(feature = "lua54", feature = "lua53"))]
+    #[cfg(any(feature = "lua54", feature = "lua53", feature = "luaeris53",))]
     assert_eq!(lua.load("1.0").eval::<String>()?, "1.0");
     #[cfg(any(feature = "lua52", feature = "lua51", feature = "luajit"))]
     assert_eq!(lua.load("1.0").eval::<String>()?, "1");
@@ -660,6 +660,7 @@ fn test_pcall_xpcall() -> Result<()> {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "luaeris53",
         feature = "lua52",
         feature = "luajit"
     ))]
@@ -1080,6 +1081,7 @@ fn test_context_thread() -> Result<()> {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "luaeris53",
         feature = "lua52",
         feature = "luajit52"
     ))]

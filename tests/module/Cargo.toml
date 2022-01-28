@@ -7,6 +7,7 @@ edition = "2018"
 [features]
 lua54 = ["mlua/lua54"]
 lua53 = ["mlua/lua53"]
+luaeris53 = ["mlua/luaeris53"]
 lua52 = ["mlua/lua52"]
 lua51 = ["mlua/lua51"]
 luajit = ["mlua/luajit"]

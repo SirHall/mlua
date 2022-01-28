@@ -114,6 +114,7 @@ fn test_metamethods() -> Result<()> {
             #[cfg(any(
                 feature = "lua54",
                 feature = "lua53",
+                feature = "luaeris53",
                 feature = "lua52",
                 feature = "luajit52"
             ))]
@@ -144,6 +145,7 @@ fn test_metamethods() -> Result<()> {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "luaeris53",
         feature = "lua52",
         feature = "luajit52"
     ))]
@@ -169,6 +171,7 @@ fn test_metamethods() -> Result<()> {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "luaeris53",
         feature = "lua52",
         feature = "luajit52"
     ))]
