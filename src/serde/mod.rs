@@ -263,7 +263,9 @@ pub(crate) unsafe fn push_array_metatable(state: *mut ffi::lua_State) {
 static ARRAY_METATABLE_REGISTRY_KEY: u8 = 0;
 
 pub mod de;
+pub mod external_refs;
 pub mod ser;
+pub mod state;
 
 #[doc(inline)]
 pub use de::Deserializer;

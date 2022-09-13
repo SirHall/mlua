@@ -22,6 +22,7 @@ pub type Integer = ffi::lua_Integer;
 pub type Number = ffi::lua_Number;
 
 /// A "light" userdata value. Equivalent to an unmanaged raw pointer.
+/// TODO: Only include the type name if we're using lua eris
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub struct LightUserData(pub *mut c_void);
 

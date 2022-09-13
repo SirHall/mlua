@@ -58,7 +58,7 @@ use {
 };
 
 #[cfg(feature = "serialize")]
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 /// Top level Lua struct which holds the Lua state itself.
 pub struct Lua {
@@ -71,8 +71,8 @@ pub struct Lua {
     _no_ref_unwind_safe: PhantomData<UnsafeCell<()>>,
 }
 
-// Data associated with the Lua.
-struct ExtraData {
+// Data associated with the Lua instance.
+pub(crate) struct ExtraData {
     registered_userdata: FxHashMap<TypeId, c_int>,
     registered_userdata_mt: FxHashMap<*const c_void, Option<TypeId>>,
     registry_unref_list: Arc<Mutex<Option<Vec<c_int>>>>,
@@ -2252,6 +2252,8 @@ impl Lua {
     where
         'lua: 'callback,
     {
+        // The callback that is executed when our callback is executed from within Lua.
+        // This function wraps around our own callback.
         unsafe extern "C" fn call_callback(state: *mut ffi::lua_State) -> c_int {
             let extra = match ffi::lua_type(state, ffi::lua_upvalueindex(1)) {
                 ffi::LUA_TUSERDATA => {
@@ -2260,6 +2262,8 @@ impl Lua {
                 }
                 _ => ptr::null_mut(),
             };
+
+            // Executes our callback, handling multivalues and errors
             callback_error_ext(state, extra, |nargs| {
                 let upvalue_idx = ffi::lua_upvalueindex(1);
                 if ffi::lua_type(state, upvalue_idx) == ffi::LUA_TNIL {

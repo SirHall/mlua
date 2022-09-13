@@ -50,20 +50,20 @@ fn main() -> Result<()> {
     println!("{}", json_str);
 
     // Create Lua Value from JSON (or any serializable type)
-    // let json = serde_json::json!({
-    //     "key": "value",
-    //     "null": null,
-    //     "array": [],
-    // });
-    // globals.set("json_value", lua.to_value(&json)?)?;
-    // lua.load(
-    //     r#"
-    //     assert(json_value["key"] == "value")
-    //     assert(json_value["null"] == null)
-    //     assert(#(json_value["array"]) == 0)
-    // "#,
-    // )
-    // .exec()?;
+    let json = serde_json::json!({
+        "key": "value",
+        "null": null,
+        "array": [],
+    });
+    globals.set("json_value", lua.to_value(&json)?)?;
+    lua.load(
+        r#"
+        assert(json_value["key"] == "value")
+        assert(json_value["null"] == null)
+        assert(#(json_value["array"]) == 0)
+    "#,
+    )
+    .exec()?;
 
     Ok(())
 }

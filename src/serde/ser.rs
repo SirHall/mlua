@@ -483,3 +483,12 @@ impl<'lua> ser::SerializeStructVariant for SerializeStructVariant<'lua> {
         Ok(Value::Table(table))
     }
 }
+
+// impl Serialize for Lua {
+//     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+//     where
+//         S: serde::Serializer,
+//     {
+//         serializer.ma
+//     }
+// }

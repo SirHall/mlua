@@ -136,9 +136,7 @@ fn generate_glue() -> Result<()> {
         (5, 1, 0)
     } else if cfg!(feature = "lua52") {
         (5, 2, 0)
-    } else if cfg!(feature = "lua53") {
-        (5, 3, 0)
-    } else if cfg!(feature = "luaeris53") {
+    } else if cfg!(any(feature = "lua53", feature = "luaeris53")) {
         (5, 3, 0)
     } else if cfg!(feature = "lua54") {
         (5, 4, 0)
